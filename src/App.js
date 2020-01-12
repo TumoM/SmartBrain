@@ -20,8 +20,9 @@ const app = new Clarifai.App({
 
 const particleOptions = {
   particles: {
+    "fps_limit": 28,
     "number": {
-      "value": 70,
+      "value": 200,
       "density": {
         "enable": true,
         "value_area": 500
@@ -37,7 +38,7 @@ const particleOptions = {
     
       "move": {
         "enable": true,
-        "speed": 8,
+        "speed": 5,
         "direction": "none",
         "random": false,
         "straight": false,
@@ -65,11 +66,7 @@ const particleOptions = {
         }
       }
   }
-
-class App extends React.Component {
-constructor(){
-  super();
-  this.state = {
+const initialState = {
   input: '',
   imageUrl: '',
   box:{},
@@ -82,22 +79,16 @@ constructor(){
     entries: 0,
     joined: ""
   }
-  }
 }
+class App extends React.Component {
+constructor(){
+  super();
+  this.state = initialState
+  }
 
   loadUser = (user) =>{
     this.setState({user})
   }
-// componentDidMount(){
-//   console.log("Fetching user list");
-  
-//   fetch('http://localhost:4000/')
-//   .then((res) => res.json())
-//   .then(data => {console.log(data)})
-//   .catch(err => 
-//     console.log("Error fetching users",err)
-//     )
-// }
 
   calcFaceLocations = (data) =>{
     const faceLocation = data.outputs[0].data.regions[0].region_info.bounding_box
