@@ -2,15 +2,15 @@ import React from 'react';
 import './Rank.css';
 
 
-const Rank = () =>{
+const Rank = ({name, entries}) =>{
 return(
     <div className="ma4 mt0">
        <div className="white f3">
-        {`Tumo, your current rank is...`}
-       </div>
-       <div className="white f1">
-        {`#2!!!`}
-       </div>
+            {`${name} , your current entry count is...`}
+            </div>
+          <div className='white f1 '>
+            {entries}
+          </div>
     </div>
 )
 

@@ -30,17 +30,18 @@ onSubmitSignin = () =>{
             password: this.state.signInPassword
         })
     })
-  .then((res) => res.json())
-  .then(data => {
-      if (data === "winning") {
+    .then(response => response.json())
+    .then(user => {
+        if(user.id){
+        this.props.loadUser(user);
         this.props.onRouteChange('home');
-      }else{
+        }else{
         console.log("Please try singing in again!!!");
         
         this.props.onRouteChange('signin');
-      }
+        }
     })
-  .catch(err => 
+    .catch(err => 
     console.log("Error signing in user",err)
     )
 }
