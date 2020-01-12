@@ -81,17 +81,21 @@ constructor(){
   onSubmitBtn = event =>{
     this.setState({imageUrl: this.state.input})
     console.log("Button Clicked");
-    console.log('Input URL 2: ',this.state.input);
-  //   app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input).then(
-  //   function(response) {
-  //     // do something with response
-  //     console.log(response);
-      
-  //   },
-  //   function(err) {
-  //     // there was an error
-  //   }
-  // );
+    app.models.predict(
+        Clarifai.FACE_DETECT_MODEL,
+        this.state.input)
+      .then(
+        function (response) {
+          // do something with response
+          console.log("RESPONSE",response.outputs[0].data.regions[0].region_info.bounding_box);
+
+        },
+        function (err) {
+          // there was an error
+          console.log("Somethings up?", err);
+          
+        }
+      );
   }
   render(){
   return (
