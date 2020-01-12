@@ -74,9 +74,30 @@ constructor(){
   imageUrl: '',
   box:{},
   route: 'signin',
-  isSignedIn: false
+  isSignedIn: false,
+  user:{
+    id: "",
+    name: "",
+    email: "",
+    entries: 0,
+    joined: ""
+  }
   }
 }
+
+  loadUser = (user) =>{
+    this.setState({user})
+  }
+// componentDidMount(){
+//   console.log("Fetching user list");
+  
+//   fetch('http://localhost:4000/')
+//   .then((res) => res.json())
+//   .then(data => {console.log(data)})
+//   .catch(err => 
+//     console.log("Error fetching users",err)
+//     )
+// }
 
   calcFaceLocations = (data) =>{
     const faceLocation = data.outputs[0].data.regions[0].region_info.bounding_box
@@ -148,7 +169,7 @@ constructor(){
           : (
             this.state.route === 'signin'?
             <Signin onRouteChange={this.onRouteChange}/>
-            : <Register  onRouteChange={this.onRouteChange}/>
+            : <Register  loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
           )}
       </div>
   );
