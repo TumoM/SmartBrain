@@ -132,34 +132,27 @@ constructor(){
   onPictureSubmit = event =>{
     this.setState({imageUrl: this.state.input})
     console.log("Button Clicked");
-    app.models.predict(
+    app.models
+      .predict(
         Clarifai.FACE_DETECT_MODEL,
         this.state.input)
       .then((response) =>{
         if (response) {
           fetch("http://localhost:4000/image",{
             method: 'put',
-            headers:{
-                'Content-Type': 'application/json'
-            },
+            headers:{'Content-Type': 'application/json'},
             body: JSON.stringify({
                 id: this.state.user.id
             })
         })
-        .then((response) =>{
-          response.json()
+        .then((res) => res.json())
+        .then((data) => {
+            this.setState(Object.assign(this.state.user, {entries:data}))
         })
-        .then(count => {
-          this.setState({
-            users:{
-              entries:count
-            }
-          })
-        })
-        }
+      }
         this.displayFaceBox(this.calcFaceLocations(response))
       })
-        .catch((err) =>{console.log("Somethings up?", err);});
+        .catch((err) =>{console.log("Somethings up?", err)});
   }
 
   onRouteChange = (route) =>{
