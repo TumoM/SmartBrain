@@ -175,11 +175,10 @@ constructor(){
           />
         <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>
       </div>
-          : (
-            this.state.route === 'signin'?
+          : (if (this.state.route === 'signin' || this.state.route === 'signout'){
             <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-            : <Register  loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-          )}
+      }else{ <Register  loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+      })}
       </div>
   );
 }
