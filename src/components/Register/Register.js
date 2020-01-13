@@ -25,30 +25,30 @@ class Register extends React.Component{
     }
     
     onSubmitRegister = () =>{
+        console.log("hello");
         fetch('http://localhost:4000/register',{
             method: 'post',
-            headers:{
-                'Content-Type': 'application/json'
-            },
+            headers:{'Content-Type': 'application/json'},
             body: JSON.stringify({
                 email: this.state.email,
                 password: this.state.password,
                 name: this.state.name
             })
         })
-        .then((res) => res.json())
-        .then(user => {
-            if (user && typeof user === 'object') {
-                this.props.loadUser(user);
+        .then(response =>  response.json())
+        .then(userRes => {
+            if (userRes) {
+                console.log('evaluating user',userRes);
+
+                this.props.loadUser(userRes);
                 this.props.onRouteChange('home');
             }else{
                 console.error("Please try registering again!!!");
-                
-            this.props.onRouteChange('register');
+                this.props.onRouteChange('register');
             }
         })
         .catch(err => 
-        console.log("Error signing in user",err)
+            console.log("Error signing in user",err)
         )
     }
     

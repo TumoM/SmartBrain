@@ -140,6 +140,10 @@ constructor(){
         .then((data) => {
             this.setState(Object.assign(this.state.user, {entries:data}))
         })
+        .catch((err) =>{
+          console.log(err);
+          
+        })
       }
         this.displayFaceBox(this.calcFaceLocations(response))
       })
@@ -148,7 +152,7 @@ constructor(){
 
   onRouteChange = (route) =>{
     if (route === 'signout') {
-      this.setState({isSignedIn:false})
+      this.setState(initialState)
     }else if(route === 'home'){
       this.setState({isSignedIn:true})
 
