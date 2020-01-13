@@ -53,7 +53,7 @@ class Register extends React.Component{
         render(){
             const {onRouteChange} = this.props
     return(
-        <article className="br3 ba b--light-purple bw1 mw6 mv5 center shadow-5 w100 w-50-m w-25-l pa3 pa4-ns">
+        <article className="formBackground br3 ba b--light-purple bw1 mw6 mv5 center shadow-5 w100 w-50-m w-25-l pa3 pa4-ns">
     <main className="pa4 black-80">
         <div className="measure">
             <fieldset id="sign_up" className="ba b--transparent ph0 mh0">

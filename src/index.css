@@ -17,3 +17,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.formBackground{
+  background-color: rgba(160, 160, 255, 0.3);
+}
