@@ -10,14 +10,6 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import tachyons from 'tachyons';
 import Particles from 'react-particles-js';
 
-import Clarifai from 'clarifai';
-
-// initialize with your api key. This will also work in your browser via http://browserify.org/
-
-const app = new Clarifai.App({
- apiKey: 'f3ba43889e7946579ffb301dd5999467'
-});
-
 const particleOptions = {
   particles: {
     "fps_limit": 28,
@@ -91,6 +83,8 @@ constructor(){
   }
 
   calcFaceLocations = (data) =>{
+    console.error('Face Data',data);
+    
     const faceLocation = data.outputs[0].data.regions[0].region_info.bounding_box
     const image = document.getElementById("inputImage");
     const width = Number(image.width);
@@ -123,10 +117,14 @@ constructor(){
   onPictureSubmit = event =>{
     this.setState({imageUrl: this.state.input})
     console.log("Button Clicked");
-    app.models
-      .predict(
-        Clarifai.FACE_DETECT_MODEL,
-        this.state.input)
+    fetch("http://localhost:4000/imageurl",{
+            method: 'post',
+            headers:{'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                input: this.state.input
+            })
+        })
+      .then(response => response.json())
       .then((response) =>{
         if (response) {
           fetch("http://localhost:4000/image",{
@@ -142,12 +140,13 @@ constructor(){
         })
         .catch((err) =>{
           console.log(err);
-          
         })
-      }
+        console.log('response',response);
+        
         this.displayFaceBox(this.calcFaceLocations(response))
+      }
       })
-        .catch((err) =>{console.log("Somethings up?", err)});
+        .catch((err) =>{console.log("Somethings up?\n", err)});
   }
 
   onRouteChange = (route) =>{
@@ -155,7 +154,6 @@ constructor(){
       this.setState(initialState)
     }else if(route === 'home'){
       this.setState({isSignedIn:true})
-
     }
     this.setState({route: route});
   }
